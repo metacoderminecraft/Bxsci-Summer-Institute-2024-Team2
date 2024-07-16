@@ -4,11 +4,12 @@
 
 package frc.robot;
 
+// import things (might need to import more later)
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Hopper extends TimedRobot {
-  // Hopper code
+  // code
 }
