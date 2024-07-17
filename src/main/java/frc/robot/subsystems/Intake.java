@@ -5,30 +5,38 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends TimedRobot {
   private final PWMSparkMax rollerMotor1 = new PWMSparkMax(0);  
   private final PWMSparkMax rollerMotor2 = new PWMSparkMax(1);  
   private final PWMSparkMax rollerMotor3 = new PWMSparkMax(2);  
 
+  private final DigitalInput beambreakone = new DigitalInput(3);
+  private final DigitalInput beambreaktwo = new DigitalInput(4);
+  
+  private boolean conveyon = false;
 
-  public void Update(XboxController controller) {
-    SmartDashboard.putBoolean("Button Pressed", controller.getRawButton(1));
-    System.out.println("Button state: " + controller.getRawButton(1));
-     if (controller.getRawButton(1)) {
-      // Button is pressed and moving pivot motor to the target position
+  public void teleopPeriodic() {
+    updateBeamBreak();
+  }
+
+  public void updateBeamBreak() {
+    if (!beambreakone.get()) {
+      conveyon = true;
+    }
+    if (!beambreaktwo.get() && conveyon) {
+      conveyon = false;
+    }
+    if (conveyon == true) {
       rollerMotor1.set(0.5);
       rollerMotor2.set(0.5);
       rollerMotor3.set(0.5);
     } else {
-      // Button is not pressed, turn off all motors
-      rollerMotor1.set(0.0);
-      rollerMotor2.set(0.0);
-      rollerMotor3.set(0.5);
-
+      rollerMotor1.set(0);
+      rollerMotor2.set(0);
+      rollerMotor3.set(0);
     }
   }
 }
