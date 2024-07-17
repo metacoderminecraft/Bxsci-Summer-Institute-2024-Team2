@@ -6,13 +6,13 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase {
+public class shooter extends SubsystemBase {
     private final CANSparkMax motor = new CANSparkMax(7,MotorType.kBrushless);
     private double power;
     double currentVelocity;
     double maxVelocity = -21666;
 
-    public Shooter () {
+    public shooter () {
         
     }
     
