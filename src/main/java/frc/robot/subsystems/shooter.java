@@ -4,16 +4,23 @@ import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class shooter extends SubsystemBase {
+public class Shooter extends SubsystemBase {
     private final CANSparkMax motor = new CANSparkMax(7,MotorType.kBrushless);
     private double power;
-    double currentVelocity;
-    double maxVelocity = -21666;
+    private final DigitalInput input = new DigitalInput (0);
+    private final DigitalInput limit = new DigitalInput (5);
 
-    public shooter () {
+    public Shooter () {
+        if input.get() = false {
+            turnOn();
+        }
         
+        else {
+          
+        }
     }
     
     public void turnOn(){
@@ -35,7 +42,7 @@ public class shooter extends SubsystemBase {
     public void Record() {
         System.out.println(power);
     }
-
+;
     public void periodic (){
 
     }
