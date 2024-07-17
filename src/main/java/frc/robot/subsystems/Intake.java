@@ -4,33 +4,46 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports.IntakePorts;
 
-public class Intake extends TimedRobot {
-  private final CANSparkMax rollerMotor1 = new PWMSparkMax(0);   
+  //intake roller
+public class Intake extends SubsystemBase {
+    private final CANSparkMax pivotMotor = new CANSparkMax(IntakePorts.pivot, MotorType.kBrushless);
+    private final DigitalInput hopperBeamSensor = new DigitalInput(IntakePorts.intakeBeam);
+    private final CANSparkMax rollerMotor = new CANSparkMax(IntakePorts.roller, MotorType.kBrushless);
+    private Encoder pivotEncoder;
+    private double targetDegrees = -60.0; // Adjust as needed
 
-  private final DigitalInput beambreakone = new DigitalInput(3);
-  private final DigitalInput beambreaktwo = new DigitalInput(4);
-  
-  private boolean conveyon = false;
 
-  public void teleopPeriodic() {
-    updateBeamBreak();
-  }
+    @Override
+    public void periodic() {
+        double motorDegrees = pivotMotor.getEncoder().getPosition();
 
-  public void updateBeamBreak() {
-    if (!beambreakone.get()) {
-      conveyon = true;
+        if (intake.runIntake();) { //when 
+            while (motorDegrees > targetDegrees) {
+                pivotMotor.set(-0.5); // Move motor down
+                motorDegrees = pivotMotor.getEncoder().getPosition(); // Update position
+            }
+            pivotMotor.set(0); // Stop motor once condition is met
+            rollerMotor.set(0); // Stop roller motor
+        } else {
+            while (motorDegrees > targetDegrees) {
+                pivotMotor.set(-0.5); // Move motor down
+                motorDegrees = pivotMotor.getEncoder().getPosition(); // Update position
+            }
+            pivotMotor.set(0); // Stop motor once condition is met
+            rollerMotor.set(0.5); // Start roller motor
+        }
     }
-    if (!beambreaktwo.get() && conveyon) {
-      conveyon = false;
-    }
-    if (conveyon == true) {
-      rollerMotor1.set(0.5);
-    } else {
-      rollerMotor1.set(0);
-    }
+
+  public void intake() {
+    
   }
 }
+
