@@ -19,7 +19,7 @@ public class Shooter extends SubsystemBase {
         }
         
         else {
-          
+          motor.set(0);
         }
     }
     
