@@ -6,22 +6,24 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Encoder;
+import frc.robot.Ports.IntakePorts;
 
-public class Shooter extends SubsystemBase {
+public class shooter extends SubsystemBase {
     private final CANSparkMax motor = new CANSparkMax(7,MotorType.kBrushless);
-    private double power;
-    private final DigitalInput input = new DigitalInput (0);
+    private double power; 
+    private final DigitalInput hopperBeamSensor = new DigitalInput (IntakePorts.intakeBeam);
     private final DigitalInput limit = new DigitalInput (5);
 
-    public Shooter () {
-        if input.get() = false {
-            turnOn();
+    public void periodic() {
+        //hopper
+        if (!hopperBeamSensor.get()) {
+          turnOn();
         }
-        
-        else {
-          turnOff();                            
+        else if (!hopperBeamSensor.get()) {
+          turnOff();
         }
-    }
+      }
     
     public void turnOn(){
         motor.set(power);
@@ -43,7 +45,4 @@ public class Shooter extends SubsystemBase {
         System.out.println(power);
     }
 ;
-    public void periodic (){
-
-    }
 }
