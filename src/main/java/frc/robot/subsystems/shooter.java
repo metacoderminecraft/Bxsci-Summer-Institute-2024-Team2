@@ -20,7 +20,7 @@ public class shooter extends SubsystemBase {
         if (!hopperBeamSensor.get()) {
           turnOn();
         }
-        else if (!hopperBeamSensor.get()) {
+        else if (hopperBeamSensor.get()) {
           turnOff();
         }
       }
