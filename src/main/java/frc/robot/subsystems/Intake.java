@@ -4,9 +4,10 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -17,7 +18,6 @@ import frc.robot.Ports.IntakePorts;
   //intake roller
 public class Intake extends SubsystemBase {
 
-  //intake roller
     private IntakeConstants intakeConstants = new IntakeConstants();
     private final CANSparkMax pivotMotor = new CANSparkMax(IntakePorts.pivot, MotorType.kBrushless);
     private final DigitalInput hopperBeamSensor = new DigitalInput(IntakePorts.intakeBeam);
