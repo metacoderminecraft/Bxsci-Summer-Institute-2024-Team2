@@ -13,17 +13,30 @@ public class Hopper extends SubsystemBase {
         this.hopper = hopper;
         
     }
+    
+    public Command runHopper(double v) {
+        return runOnce(() -> hopper.setVoltage(v))
+    } 
+
+
+    public Command forward() { 
+        return runHopper(OPERATING_VOLTS).until(hopper.brokenBeam()).andThen(runHopper(0));
+        
+    }
+    
 
     public Command forward() {
         hopper.setVoltage(OPERATING_VOLTS);
         if (hopper.brokenBeam()) {
             hopper.setVoltage(0); 
         }
+        return
     }
     
 
     public Command backward(){
         hopper.setVoltage(-1 * OPERATING_VOLTS);
+        return 
     }
 
     public static Hopper create() {

@@ -4,10 +4,9 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import edu.wpi.first.wpilibj.simulation.SimDeviceSim;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
-public class SimHopper extends SubsystemBase implements HopperIO {
+public class SimHopper implements HopperIO {
   private final DCMotorSim motor;
   private final SimDeviceSim beam;
   public SimHopper(){
