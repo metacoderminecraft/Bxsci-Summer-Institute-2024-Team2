@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
@@ -15,32 +16,40 @@ import frc.robot.Ports.IntakePorts;
 
   //intake roller
 public class Intake extends SubsystemBase {
-    
+
+  //intake roller
     private IntakeConstants intakeConstants = new IntakeConstants();
     private final CANSparkMax pivotMotor = new CANSparkMax(IntakePorts.pivot, MotorType.kBrushless);
     private final DigitalInput hopperBeamSensor = new DigitalInput(IntakePorts.intakeBeam);
     private final CANSparkMax rollerMotor = new CANSparkMax(IntakePorts.roller, MotorType.kBrushless);
-    private Encoder pivotEncoder;
+    // RelativeEncoder encoder
+    private AbsoluteEncoder pivotEncoder;
     private PIDController pivotController = new PIDController(intakeConstants.kp1,intakeConstants.kd1,intakeConstants.ki1); //it gives the change in radians
     private PIDController rollerController = new PIDController(intakeConstants.kp2, intakeConstants.kd2, intakeConstants.ki2);
 
-
     public void setPosition() { //
-        double motorDegrees = pivotMotor.getEncoder().getPosition();
+        double motorDegrees = pivotEncoder.getPosition();
         double v = pivotController.calculate(motorDegrees, intakeConstants.targetDegrees.magnitude());
         pivotMotor.setVoltage(v);
     }
 
 
     public void setRoller(){
-        double motorSpeed = pivotMotor.getEncoder().getVelocity();
+        double motorSpeed = pivotEncoder.getVelocity();
         double v = rollerController.calculate(motorSpeed, intakeConstants.targetSpeed.magnitude());
         rollerMotor.setVoltage(v);
 
+    }
+
+    public void resetIntake(){
+        double motorDegrees = pivotEncoder.getPosition();
+        double v = pivotController.calculate(motorDegrees, 0); //change when testing with robot
+        pivotMotor.setVoltage(v);
+        rollerMotor.set(0);
+    }
 
     @Override
     public void periodic() {
         setPosition();
-        }
     }
 }
