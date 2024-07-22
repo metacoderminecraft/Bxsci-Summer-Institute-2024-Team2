@@ -13,11 +13,18 @@ public class Drive extends SubsystemBase{
     private final CANSparkMax rightfollower = new CANSparkMax(DriveConstants.krightMotor2Port, MotorType.kBrushless);
     
     public Drive() {
+        leftLeader.restoreFactoryDefaults();
+        leftfollower.restoreFactoryDefaults();
+        rightLeader.restoreFactoryDefaults();
+        rightfollower.restoreFactoryDefaults();
+        
+        leftLeader.setInverted(true);
         rightfollower.follow(rightLeader);
         leftfollower.follow(leftLeader);
     }
+
     public void drive(double leftSpeed, double rightSpeed){
-     leftLeader.set(leftSpeed);
-     rightLeader.set(rightSpeed);
+        leftLeader.set(Math.copySign(leftSpeed * leftSpeed, leftSpeed));
+        rightLeader.set(Math.copySign(rightSpeed * rightSpeed, rightSpeed));
     }
 }
