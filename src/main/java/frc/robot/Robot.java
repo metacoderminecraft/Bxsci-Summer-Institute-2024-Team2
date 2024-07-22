@@ -7,9 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Hopper.SimHopper;
 import frc.robot.Intake.Intake;
-import frc.robot.Intake.SimIntake;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,7 +17,9 @@ import frc.robot.Intake.SimIntake;
  */
 public class Robot extends TimedRobot {
   XboxController controller = new XboxController(0);
-  SimHopper SimHopper = new SimHopper();
+  Intake intake = new Intake();
+
+
 
 
   /**
@@ -78,11 +78,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-   // if(controller.getAButtonPressed()){
-      //intake.setPosition();
-     //intake.setRoller();
+   if(controller.getAButtonPressed()){
+      intake.setPosition();
+     intake.setRoller();
    }
-  //}
+  }
 
   @Override
   public void testInit() {

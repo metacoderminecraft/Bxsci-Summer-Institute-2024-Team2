@@ -7,11 +7,8 @@ package frc.robot.Intake;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports.IntakePorts;
 
@@ -27,7 +24,15 @@ public class Intake extends SubsystemBase {
     private PIDController pivotController = new PIDController(intakeConstants.kp1,intakeConstants.kd1,intakeConstants.ki1); //it gives the change in radians
     private PIDController rollerController = new PIDController(intakeConstants.kp2, intakeConstants.kd2, intakeConstants.ki2);
 
-    public void setPosition() { //
+    //autonomous
+    
+
+
+
+
+
+    //human
+    public void setPosition() { 
         double motorDegrees = pivotEncoder.getPosition();
         double v = pivotController.calculate(motorDegrees, intakeConstants.targetDegrees.magnitude());
         pivotMotor.setVoltage(v);
@@ -35,9 +40,12 @@ public class Intake extends SubsystemBase {
 
 
     public void setRoller(){
+        while(!hopperBeamSensor.get()){
         double motorSpeed = pivotEncoder.getVelocity();
         double v = rollerController.calculate(motorSpeed, intakeConstants.targetSpeed.magnitude());
         rollerMotor.setVoltage(v);
+        }
+
 
     }
 
