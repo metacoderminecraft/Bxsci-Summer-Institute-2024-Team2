@@ -20,7 +20,6 @@ public class Drive extends SubsystemBase{
      
     
     public Drive() {
-        leftLeader.setInverted(true);
          robotDrive = new DifferentialDrive(leftLeader::set, rightLeader::set );
         
         leftLeader.restoreFactoryDefaults();
