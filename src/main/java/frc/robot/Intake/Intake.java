@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Ports.IntakePorts;
+import static frc.robot.Intake.IntakeConstants.*;
 
   //intake roller
 public class Intake extends SubsystemBase {
@@ -21,8 +22,8 @@ public class Intake extends SubsystemBase {
     private final CANSparkMax rollerMotor = new CANSparkMax(IntakePorts.roller, MotorType.kBrushless);
     // RelativeEncoder encoder
     private AbsoluteEncoder pivotEncoder;
-    private PIDController pivotController = new PIDController(intakeConstants.kp1,intakeConstants.kd1,intakeConstants.ki1); //it gives the change in radians
-    private PIDController rollerController = new PIDController(intakeConstants.kp2, intakeConstants.kd2, intakeConstants.ki2);
+    private PIDController pivotController = new PIDController(kp1, kd1, ki1); //it gives the change in radians
+    private PIDController rollerController = new PIDController(kp2, kd2, ki2);
 
     //autonomous
     
